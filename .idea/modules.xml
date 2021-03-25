@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/mediamachineClient.iml" filepath="$PROJECT_DIR$/mediamachineClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/stackrockjava.iml" filepath="$PROJECT_DIR$/stackrockjava.iml" />
     </modules>
   </component>

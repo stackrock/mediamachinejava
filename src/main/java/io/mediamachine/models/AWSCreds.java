@@ -20,10 +20,4 @@ public class AWSCreds implements Credentials {
       this.secretAccessKey = secretAccessKey;
       this.region = region;
    }
-
-   public Store storeType() {
-      return Store.S3;
-   }
-
-
 }

@@ -4,9 +4,9 @@ import io.mediamachine.utils.API;
 import io.mediamachine.utils.RealAPI;
 
 /**
- * This class is a representation of a Job in stackrock.io.
+ * This class is a representation of a Job in mediamachine.io.
  *
- * @author Stackrock
+ * @author MediaMachine
  * @version 1.0
  */
 public class Job {
@@ -25,7 +25,7 @@ public class Job {
     /**
      * This method is used to get the status of the job in our system.
      *
-     * @return a Status value representing the status of the job in the system.
+     * @return a {@link io.mediamachine.models.Status} value representing the status of the job in the system.
      */
     public Status status() {
         String status = this.api.getJobStatus(this.reqId);

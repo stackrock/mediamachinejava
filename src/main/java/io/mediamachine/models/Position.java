@@ -3,7 +3,7 @@ package io.mediamachine.models;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Position
+ * Position is an enum used to configure the position of a {@link io.mediamachine.models.Watermark} on the output.
  */
 public enum Position {
     /**

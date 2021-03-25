@@ -17,9 +17,4 @@ public class AzureCreds implements Credentials{
         this.accountName = accountName;
         this.accountKey = accountKey;
     }
-
-    public Store storeType() {
-        return Store.AZURE;
-    }
-
 }

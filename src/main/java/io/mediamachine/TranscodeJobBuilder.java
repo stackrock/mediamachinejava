@@ -1,122 +1,100 @@
 package io.mediamachine;
 
 import com.google.gson.Gson;
-import io.mediamachine.exceptions.ServiceException;
 import io.mediamachine.models.*;
-import io.mediamachine.utils.API;
-import io.mediamachine.utils.RealAPI;
 
-import java.io.FileNotFoundException;
-import java.net.URL;
+/**
+ * TranscodeJobBuilder is a builder for a Thumbnail Job.
+ */
+public class TranscodeJobBuilder extends AbstractJobBuilder<TranscodeJobBuilder> {
+    private Encoder encoder;
+    private BitrateKbps bitrateKbps;
+    private Container container;
+    private Integer height = null;
 
-public class TranscodeJobBuilder {
-    private String apiKey;
-    private URL successUrl;
-    private URL failureUrl;
-    private URL inputUrl;
-    private Blob inputBlob;
-    private URL outputUrl;
-    private Blob outputBlob;
-    private Watermark watermark;
-    private TranscodeOpts transcode;
-    private API api = new RealAPI();
-
-    private TranscodeJobBuilder() {
+    protected TranscodeJobBuilder(String apiKey) {
+        // Set the defaults
+        this.setApiKey(apiKey);
+        this.width(720);
+        // set transcode defaults
+        this.encoder = Encoder.H264;
+        this.container = Container.MP4;
+        this.bitrateKbps = BitrateKbps.TWO_MBPS;
+        this.width(720);
     }
 
-    public static TranscodeJobBuilder withDefaults() {
-        TranscodeJobBuilder instance = new TranscodeJobBuilder();
-        return instance;
-    }
 
-    //package method to allow mock api
-    static TranscodeJobBuilder withDefaults(API api) {
-        TranscodeJobBuilder instance = new TranscodeJobBuilder();
-        instance.api = api;
-        return instance;
-    }
-
-    public TranscodeJobBuilder apiKey(String apiKey) {
-        this.apiKey = apiKey;
+    public TranscodeJobBuilder getThis() {
         return this;
     }
 
     /**
-     * Set the success and failure URL for this job.
+     * Set the height of the output video.
      *
-     * @param webhooks a Webhooks object with the success and failure URL to use.
-     * @return The ThumbnailJobBuilder instance configured with the failure and success URL.
+     * @param height an int representing the height of the ouput video.
+     * @return the {@link io.mediamachine.TranscodeJobBuilder} instance configured with the output height.
      */
-    public TranscodeJobBuilder webhook(Webhooks webhooks) {
-        this.failureUrl = webhooks.getFailureURL();
-        this.successUrl = webhooks.getSuccessURL();
-
+    public TranscodeJobBuilder height(int height) {
+        this.height = height;
         return this;
     }
 
-    public TranscodeJobBuilder from(URL input) {
-        this.inputUrl = input;
+    /**
+     * Set the encoder to use for the output video.
+     * @param encoder a {@link io.mediamachine.models.Encoder} with the encoder type to use.
+     * @return the {@link io.mediamachine.TranscodeJobBuilder} instance configured with the encoder to use.
+     */
+    public TranscodeJobBuilder encoder(Encoder encoder) {
+        this.encoder = encoder;
         return this;
     }
 
-    public TranscodeJobBuilder from(Blob input) {
-        this.inputBlob = input;
+    /**
+     * Set the bitrate to use for the output video.
+     * @param bitrate a {@link io.mediamachine.models.BitrateKbps} with the bitrate to use.
+     * @return the {@link io.mediamachine.TranscodeJobBuilder} instance configured with the bitrate to use.
+     */
+    public TranscodeJobBuilder bitrate(BitrateKbps bitrate) {
+        this.bitrateKbps = bitrate;
         return this;
     }
 
-    public TranscodeJobBuilder to(URL output) {
-        this.outputUrl = output;
+    /**
+     * Set the container to use for the output video.
+     * @param container a {@link io.mediamachine.models.Container} with the container to use.
+     * @return the {@link io.mediamachine.TranscodeJobBuilder} instance configured with the container to use.
+     */
+    public TranscodeJobBuilder container(Container container) {
+        this.container = container;
         return this;
     }
 
-    public TranscodeJobBuilder to(Blob output) {
-        this.outputBlob = output;
-        return this;
-    }
-
-    public TranscodeJobBuilder watermarkFromText(String text) {
-        this.watermark = Watermark.withDefaults().text(text);
-        return this;
-    }
-
-    public TranscodeJobBuilder watermark(Watermark watermark) {
-        this.watermark = watermark;
-        return this;
-    }
-
-    public TranscodeJobBuilder options(TranscodeOpts opts) {
-        this.transcode = opts;
-        return this;
-    }
-
-
+    /**
+     * Executes the Job.
+     *
+     * @return A {@link io.mediamachine.models.Job} object that can be used to query the status of the job.
+     * @throws {@link java.lang.IllegalStateException} if there is any missing configuration.
+     */
     public Job execute() {
-        if (apiKey == null) {
-            throw new IllegalStateException("Missing apiKey");
+        if (encoder == null) {
+            throw new IllegalStateException("Missing encoder");
         }
 
-        if (apiKey.trim().equals("")) {
-            throw new IllegalStateException("Missing apiKey");
+        if (bitrateKbps == null) {
+            throw new IllegalStateException("Missing bitrate");
         }
 
-        if (inputBlob == null && inputUrl == null) {
-            throw new IllegalStateException("Missing from");
+        if (container == null) {
+            throw new IllegalStateException("Missing container");
         }
 
-        if (outputBlob == null && outputUrl == null) {
-            throw new IllegalStateException("Missing to");
-        }
-        if (transcode == null) {
-            throw new IllegalStateException("Missing options");
+        if (container == Container.WEBM && (encoder == Encoder.H264 || encoder == Encoder.H265)) {
+            throw new IllegalStateException("Wrong container/encoder combination");
         }
 
         Gson gson = new Gson();
         String json = gson.toJson(this);
-        try {
-            Job job = this.api.createJob("transcode", json);
-            return job;
-        } catch (FileNotFoundException e) {
-            throw new ServiceException("There was a problem creating a Job with our services:", e);
-        }
+        String jobType = "transcode";
+        return runExecute(jobType, json);
     }
 }

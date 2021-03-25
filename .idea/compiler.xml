@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="stackrockjava" />
+        <module name="mediamachineClient" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="mediamachineClient" target="15" />
       <module name="stackrockjava" target="9" />
     </bytecodeTargetLevel>
   </component>

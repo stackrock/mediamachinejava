@@ -3,19 +3,21 @@ package io.mediamachine.models;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Bitrate.
+ * Bitrate is an enum used to configure the bitrate of the transcode output.
+ * 
+ * @see io.mediamachine.TranscodeJobBuilder#bitrate(BitrateKbps) 
  */
 public enum BitrateKbps {
-    /**
-     * 8000Kbps.
-     */
-    @SerializedName("8000")
-    EIGHT_MBPS,
     /**
      * 4000Kbps.
      */
     @SerializedName("4000")
     FOUR_MBPS,
+    /**
+     *
+     */
+    @SerializedName("2000")
+    TWO_MBPS,
     /**
      * 1000Kbps.
      */
