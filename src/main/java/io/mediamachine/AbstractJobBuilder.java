@@ -59,11 +59,7 @@ public abstract class AbstractJobBuilder<T extends AbstractJobBuilder<T>> {
      * @return the instance of the JobBuilder configured with the width.
      */
     public T width(Integer width) {
-        if (width == null) {
-            this.width = 720;
-        } else {
-            this.width = width;
-        }
+        this.width = width;
         return getThis();
     }
 

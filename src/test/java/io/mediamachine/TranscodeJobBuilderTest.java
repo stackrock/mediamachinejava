@@ -68,7 +68,7 @@ public class TranscodeJobBuilderTest {
         MediaMachine client = new MediaMachine(FAKE_API_KEY);
         MockAPI fakeApi = new MockAPI();
 
-        IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             TranscodeJobBuilder tjb = client.transcodeJob().setApi(fakeApi).webhooks(FAKE_WEBHOOKS).from(FAKE_INPUT_URL).to(FAKE_OUTPUT_URL).encoder(null);
             tjb.execute();
         }, "Expected Transcode to throw, but it didn't");
@@ -82,7 +82,7 @@ public class TranscodeJobBuilderTest {
         MediaMachine client = new MediaMachine(FAKE_API_KEY);
         MockAPI fakeApi = new MockAPI();
 
-        IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             TranscodeJobBuilder tjb = client.transcodeJob().setApi(fakeApi).webhooks(FAKE_WEBHOOKS).from(FAKE_INPUT_URL).to(FAKE_OUTPUT_URL).bitrate(null);
             tjb.execute();
         }, "Expected Transcode to throw, but it didn't");
@@ -95,7 +95,7 @@ public class TranscodeJobBuilderTest {
         MediaMachine client = new MediaMachine(FAKE_API_KEY);
         MockAPI fakeApi = new MockAPI();
 
-        IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             TranscodeJobBuilder tjb = client.transcodeJob().setApi(fakeApi).webhooks(FAKE_WEBHOOKS).from(FAKE_INPUT_URL).to(FAKE_OUTPUT_URL).container(null);
             tjb.execute();
         }, "Expected Transcode to throw, but it didn't");
@@ -108,7 +108,7 @@ public class TranscodeJobBuilderTest {
         MediaMachine client = new MediaMachine(FAKE_API_KEY);
         MockAPI fakeApi = new MockAPI();
 
-        IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             TranscodeJobBuilder tjb = client.transcodeJob().setApi(fakeApi).webhooks(FAKE_WEBHOOKS).from(FAKE_INPUT_URL).to(FAKE_OUTPUT_URL).container(Container.WEBM).encoder(Encoder.H264);
             tjb.execute();
         }, "Expected Transcode to throw, but it didn't");
@@ -121,7 +121,7 @@ public class TranscodeJobBuilderTest {
         MediaMachine client = new MediaMachine(FAKE_API_KEY);
         MockAPI fakeApi = new MockAPI();
 
-        IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             TranscodeJobBuilder tjb = client.transcodeJob().setApi(fakeApi).webhooks(FAKE_WEBHOOKS).from(FAKE_INPUT_URL).to(FAKE_OUTPUT_URL).container(Container.WEBM).encoder(Encoder.H265);
             tjb.execute();
         }, "Expected Transcode to throw, but it didn't");
@@ -136,7 +136,6 @@ public class TranscodeJobBuilderTest {
             "apiKey": "test-123",
             "inputUrl": "http://mediamachine.io/path/to/video.mp4",
             "outputUrl": "http://mediamachine.io/path/to/output",
-            "width": 720,
             "successUrl": "http://mediamachine.io/success",
             "failureUrl": "http://mediamachine.io/failure",
             "encoder": "h264",

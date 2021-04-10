@@ -27,7 +27,7 @@ public class ThumbnailJobBuilder extends AbstractJobBuilder<ThumbnailJobBuilder>
      * Executes the Job.
      *
      * @return A {@link io.mediamachine.models.Job} object that can be used to query the status of the job.
-     * @throws {@link java.lang.IllegalStateException} if there is any missing configuration.
+     * @throws java.lang.IllegalStateException if there is any missing configuration.
      */
     public Job execute()  {
         Gson gson = new Gson();

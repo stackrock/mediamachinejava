@@ -4,9 +4,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.stackrock</groupId>
-    <artifactId>mediamachineClient</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>io.mediamachine</groupId>
+    <artifactId>mediamachine</artifactId>
+    <version>1.0.0</version>
+
+    <licenses>
+        <license>
+            <name>ISC</name>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>mediamachine</id>
+            <name>MediaMachine</name>
+            <email>info@stackrock.io</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:stackrock/mediamachinejava.git</connection>
+        <developerConnection>scm:git:ssh://github.com:stackrock/mediamachinejava.git</developerConnection>
+        <url>https://github.com/stackrock/mediamachine/tree/main</url>
+    </scm>
 
     <build>
         <plugins>
@@ -31,9 +50,48 @@
                     <show>public</show>
                     <nohelp>true</nohelp>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>com.github.platform-team</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>6.0.0</version>
+            </extension>
+        </extensions>
     </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>maven-repo.mediamachine.io</id>
+            <url>s3://maven-repo.mediamachine.io/snapshot</url>
+        </snapshotRepository>
+        <repository>
+            <id>maven-repo.mediamachine.io</id>
+            <url>s3://maven-repo.mediamachine.io/release</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.source>9</maven.compiler.source>
@@ -66,5 +124,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

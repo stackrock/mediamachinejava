@@ -51,7 +51,7 @@ public class SummaryJobBuilder  extends AbstractJobBuilder<SummaryJobBuilder> {
      * Executes the job.
      *
      * @return a {@link io.mediamachine.models.Job} instance that represent the work being done on mediamachine services.
-     * @throws {@link io.mediamachine.exceptions.ServiceException} if there is any problem with the underlying service call.
+     * @throws io.mediamachine.exceptions.ServiceException if there is any problem with the underlying service call.
      */
     public Job execute() {
         if (summaryType == null) {
